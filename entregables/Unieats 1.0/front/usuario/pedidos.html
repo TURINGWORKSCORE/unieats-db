@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniEats - Realizar Pedido</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="img/logo-universidad.png" alt="Logo Universidad" class="logo">
+            <img src="img/logo-unieats.png" alt="Logo UniEats" class="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="pedidos.html">Inicio</a></li>
+                <li><a href="pedidos.html">Pedidos</a></li>
+                <li><a href="#">Transparencia</a></li>
+                <li><a href="#">Perfil</a></li>
+                <li><button id="logoutBtn" class="btn btn-logout">Cerrar sesión</button></li>
+            </ul>
+            <button id="currentOrdersBtn" class="btn btn-secondary">Pedidos en curso</button>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Realizar Pedido</h1>
+        
+        <form id="orderForm">
+            <div class="form-group">
+                <label for="cafeteria">Cafetería:</label>
+                <select id="cafeteria" name="cafeteria" required>
+                    <option value="">Seleccione una cafetería</option>
+                </select>
+            </div>
+            
+            <div id="orderItems">
+                <!-- Solo un conjunto de campos para productos -->
+                <div class="order-item" data-item-id="1">
+                    <div class="form-group">
+                        <label for="category1">Categoría:</label>
+                        <select id="category1" name="category1" class="category-select" required disabled>
+                            <option value="">Seleccione una categoría</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product1">Producto:</label>
+                        <select id="product1" name="product1" class="product-select" required disabled>
+                            <option value="">Seleccione un producto</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity1">Cantidad:</label>
+                        <input type="number" id="quantity1" name="quantity1" min="1" value="1" required>
+                    </div>
+                    
+                    <div class="product-info">
+                        <p class="product-description">Descripción: <span></span></p>
+                        <p class="product-stock">Disponibles: <span></span></p>
+                        <p class="product-price">Precio unitario: $<span></span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" id="addItemBtn" class="btn btn-secondary">+ Añadir otro producto</button>
+            
+            <div class="order-summary">
+                <h3>Resumen del pedido</h3>
+                <div id="orderSummary">
+                    <p>No hay productos en tu pedido</p>
+                </div>
+                <p class="total-amount">Total: $<span id="totalAmount">0</span></p>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Hacer pedido</button>
+        </form>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 UniEats - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/pedidos.js"></script>
+</body>
+</html>

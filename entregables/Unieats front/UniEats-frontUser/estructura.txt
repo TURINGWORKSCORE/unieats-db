@@ -1,0 +1,24 @@
+unieats-frontend/
+│
+├── index.html                # Página de inicio de sesión
+├── pedidos.html              # Página para realizar pedidos
+├── registro.html             # Página de registro de usuarios
+├── compra.html               # Página de confirmación de compra
+├── gracias.html              # Página de agradecimiento post-compra
+│
+├── css/
+│   ├── styles.css            # Estilos principales
+│   └── auth.css              # Estilos específicos para autenticación
+│
+├── js/
+│   ├── auth.js               # Lógica de autenticación
+│   ├── data.js               # Datos mockeados (simula la BD)
+│   ├── pedidos.js            # Lógica de pedidos
+│   ├── registro.js           # Lógica de registro
+│   └── compra.js             # Lógica de compra
+│
+├── img/                      # Carpeta para imágenes/logo
+│   ├── logo-unieats.png      # Logo de UniEats
+│   └── logo-universidad.png  # Logo de la universidad
+│
+└── README.md                 # Instrucciones de instalación

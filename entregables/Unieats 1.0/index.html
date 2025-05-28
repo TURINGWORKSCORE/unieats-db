@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UniEats - Seleccionar tipo de acceso</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="selector-container">
+    <h1>Bienvenido a UniEats</h1>
+    <p>Selecciona cómo deseas acceder:</p>
+
+    <div class="botones-acceso">
+      <button onclick="window.location.href='front/usuario/login-usuario.html'">Acceso Usuario</button>
+      <button onclick="window.location.href='front/empleado/login-empleado.html'">Acceso Empleado</button>
+    </div>
+  </div>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding-top: 100px;
+    }
+    .selector-container {
+      background: white;
+      display: inline-block;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .botones-acceso button {
+      margin: 10px;
+      padding: 15px 30px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #28a745; /* Verde principal */
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    .botones-acceso button:hover {
+      background-color: #218838; /* Verde más oscuro al pasar el mouse */
+    }
+  </style>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniEats - Gracias por tu compra</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="img/logo-universidad.png" alt="Logo Universidad" class="logo">
+            <img src="img/logo-unieats.png" alt="Logo UniEats" class="logo">
+        </div>
+    </header>
+    
+    <main class="thank-you-container">
+        <div class="thank-you-box">
+            <h1>¡Gracias por tu pedido!</h1>
+            <p>Tu pedido ha sido procesado exitosamente.</p>
+            <p>Número de pedido: <strong id="orderNumber"></strong></p>
+            
+            <div class="action-buttons">
+                <a href="pedidos.html" class="btn btn-primary">Volver al inicio</a>
+                <button id="logoutButton" class="btn btn-secondary">Salir</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2023 UniEats - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script>
+        // Mostrar número de pedido (simulado)
+        document.getElementById('orderNumber').textContent = Math.floor(Math.random() * 10000);
+        
+        // Manejar botón de salir
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            // Limpiar sesión y redirigir a login
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

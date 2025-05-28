@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniEats - Historial de Pedidos</title>
+    <link rel="stylesheet" href="./css/empleado.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="../img/logo-universidad.png" alt="Logo Universidad" class="logo">
+            <img src="../img/logo-unieats.png" alt="Logo UniEats" class="logo">
+        </div>
+        <button id="logoutBtn" class="btn btn-logout">Cerrar sesión</button>
+    </header>
+    
+    <main>
+        <h1>Historial de Pedidos Atendidos</h1>
+        
+        <div id="historialContainer">
+            <!-- Los pedidos completados se cargarán aquí dinámicamente -->
+        </div>
+        
+        <button id="regresarBtn" class="btn-accion btn-regresar">Regresar a Pedidos</button>
+    </main>
+
+    <script src="js/empleado-data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar autenticación y cafetería seleccionada
+            const empleado = JSON.parse(localStorage.getItem('currentEmpleado'));
+            const cafeId = localStorage.getItem('currentCafeteria');
+            
+            if (!empleado || !cafeId) {
+                window.location.href = 'seleccion.html';
+                return;
+            }
+            
+            // Cargar pedidos completados
+            const pedidos = empleadoDB.getPedidosByCafe(parseInt(cafeId), 'COMPLETED');
+            
+            const container = document.getElementById('historialContainer');
+            
+            if (pedidos.length === 0) {
+                container.innerHTML = '<p>No hay pedidos en el historial</p>';
+            } else {
+                pedidos.forEach(pedido => {
+                    const pedidoCard = document.createElement('div');
+                    pedidoCard.className = 'pedido-card';
+                    pedidoCard.innerHTML = `
+                        <div class="pedido-header">
+                            <h3>Pedido #${pedido.orderId}</h3>
+                            <span>Completado</span>
+                        </div>
+                        <div class="pedido-items">
+                            ${pedido.items.map(item => `
+                                <div class="pedido-item">
+                                    <span>${item.name} (ID: ${item.productId})</span>
+                                    <span>${item.quantity} x $${item.price.toLocaleString()}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="pedido-total">
+                            <strong>Total: $${pedido.total.toLocaleString()}</strong>
+                        </div>
+                        <div class="pedido-fecha">
+                            <small>${pedido.orderDate}</small>
+                        </div>
+                    `;
+                    container.appendChild(pedidoCard);
+                });
+            }
+            
+            // Manejar botón de regresar
+            document.getElementById('regresarBtn').addEventListener('click', function() {
+                window.location.href = 'pedidos.html';
+            });
+            
+            // Manejar cierre de sesión
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('currentEmpleado');
+                localStorage.removeItem('currentCafeteria');
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>

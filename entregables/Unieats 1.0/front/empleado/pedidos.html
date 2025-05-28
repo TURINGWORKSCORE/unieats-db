@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniEats - Pedidos Pendientes</title>
+    <link rel="stylesheet" href="css/empleado.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container" style="display: flex; align-items: center; gap: 15px;">
+    <img src="img/logo-universidad.png" alt="Logo Universidad" style="height: 50px;">
+    <img src="img/logo-unieats.png" alt="Logo UniEats" style="height: 40px;">
+</div>
+        <nav>
+            <button id="historialBtn" class="btn btn-secondary">Historial</button>
+            <button id="logoutBtn" class="btn btn-logout">Cerrar sesión</button>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Pedidos Pendientes</h1>
+        
+        <div id="pedidosContainer">
+            <!-- Los pedidos se cargarán aquí dinámicamente -->
+        </div>
+    </main>
+
+    <script src="js/empleado-data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar autenticación y cafetería seleccionada
+            const empleado = JSON.parse(localStorage.getItem('currentEmpleado'));
+            const cafeId = localStorage.getItem('currentCafeteria');
+            
+            if (!empleado || !cafeId) {
+                window.location.href = 'seleccion.html';
+                return;
+            }
+            
+            // Cargar pedidos pendientes
+            const pedidos = empleadoDB.getPedidosByCafe(parseInt(cafeId), 'PENDING')
+                          .concat(empleadoDB.getPedidosByCafe(parseInt(cafeId), 'IN_PROGRESS'));
+            
+            const container = document.getElementById('pedidosContainer');
+            
+            if (pedidos.length === 0) {
+                container.innerHTML = '<p>No hay pedidos pendientes</p>';
+            } else {
+                pedidos.forEach(pedido => {
+                    const pedidoCard = document.createElement('div');
+                    pedidoCard.className = 'pedido-card';
+                    pedidoCard.innerHTML = `
+                        <div class="pedido-header">
+                            <h3>Pedido #${pedido.orderId}</h3>
+                            <span>${pedido.status === 'PENDING' ? 'Pendiente' : 'En Progreso'}</span>
+                        </div>
+                        <div class="pedido-items">
+                            ${pedido.items.map(item => `
+                                <div class="pedido-item">
+                                    <span>${item.name} (ID: ${item.productId})</span>
+                                    <span>${item.quantity} x $${item.price.toLocaleString()}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="pedido-total">
+                            <strong>Total: $${pedido.total.toLocaleString()}</strong>
+                        </div>
+                        <div class="acciones-pedido">
+                            <button class="btn-accion btn-listo" data-order="${pedido.orderId}">Marcar como Listo</button>
+                            <button class="btn-accion btn-finalizar" data-order="${pedido.orderId}">Finalizar Pedido</button>
+                        </div>
+                    `;
+                    container.appendChild(pedidoCard);
+                });
+            }
+            
+            // Manejar botones de acción
+            document.querySelectorAll('.btn-listo').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const orderId = parseInt(this.getAttribute('data-order'));
+                    // Simular envío de email (en producción sería una llamada AJAX)
+                    alert(`Email enviado al cliente sobre el pedido #${orderId}`);
+                });
+            });
+            
+            document.querySelectorAll('.btn-finalizar').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const orderId = parseInt(this.getAttribute('data-order'));
+                    if (empleadoDB.updatePedidoStatus(orderId, 'COMPLETED')) {
+                        alert(`Pedido #${orderId} marcado como completado`);
+                        window.location.reload();
+                    }
+                });
+            });
+            
+            // Manejar botón de historial
+            document.getElementById('historialBtn').addEventListener('click', function() {
+                window.location.href = 'historial.html';
+            });
+            
+            // Manejar cierre de sesión
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('currentEmpleado');
+                localStorage.removeItem('currentCafeteria');
+                window.location.href = 'login-empleado.html';
+            });
+        });
+    </script>
+</body>
+</html>
